@@ -1,0 +1,163 @@
+/* To keep the bar on the top and start content from the bottom of the nav bar */
+body {
+  min-height: 50rem;
+  padding-top: 6rem;
+}
+
+
+/* formatting the profile image*/
+div.media img {
+    margin-top:5px;
+    width:70px;
+    height:70px;
+}
+div.media{
+	border-style:solid;
+	border-width:1px;
+	padding-top:10px;
+	margin-top:15px;
+	margin-left:10px;
+	margin-right:10px;
+	border:0px;
+	width:100%;
+}
+div.input{
+	border-width:1px;
+	padding-top:10px;
+	margin-top:15px;
+	margin-left:10px;
+	margin-right:10px;
+	margin-bottom:60px;
+}
+
+div.profile-user img{
+	width:20px;
+	height:auto;
+}
+div.profile-user li{
+	margin-top: 5px;
+}
+
+div.divinside{
+    padding-top:6.5rem;
+}
+div.media-body {
+    padding-left:15px;
+    padding-right:20px;
+    padding-bottom:10px;
+}
+li.userimage {
+    list-style-image: url('svg/users.png');
+}
+
+li.placeholerimage {
+	list-style-image: url('svg/placeholder.png');
+}
+table.profiletable {
+    width:60%;
+    margin:0 auto;
+    margin-left:0;
+    table-layout:fixed;
+}
+table.profiletable td {
+    font-size:80%;
+    word-break: break-all;
+
+}
+
+
+
+/* incorrect p label*/
+p.error {
+    color:red;
+    font-size:80%;
+}
+p.success {
+    color:green;
+    font-size:80%;
+}
+
+.label {
+    width: 20%;
+}
+.field {
+    width:35%;
+}
+.errortd {
+    width:45%;
+	color:red;
+	font-size:80%;
+	padding:10px;
+}
+.labelp {
+    width:30%;
+}
+.content {
+    width:70%;
+}
+
+table.logintable, table.logintable td input{
+    width:100%;
+    table-layout: fixed;
+}
+table.logintable td {
+    padding-top: 10px;
+    padding-right:0px;
+
+}
+
+button.postbtn {
+    margin-top:10px;
+}
+
+div.col img {
+  width:150px;
+  height:150px;
+  float:right;
+  vertical-align:middle;
+}
+img.profile {
+     width:150px;
+     height:150px;
+}
+.post-body{
+    padding-top:5px;
+    margin-bottom:0px;
+}
+.comment-label{
+    padding-left:0px;
+}
+
+div.commentMedia img {
+    margin-top:5px;
+    margin-left:5px;
+    width:40px;
+    height:40px;
+}
+.comment-body{
+    padding-top:3px;
+    margin-bottom:0px;
+    font-size:90%;
+}
+.date{
+    font-size: 70%;
+}
+div.commentMedia{
+    padding-top:0px;
+    margin-top:0px;
+	margin-right:5px;
+	width:100%;
+	display:inline-block;
+}
+.commentMedia-body{
+    display:inline-block;
+    padding-left:10px;
+    padding-right:10px;
+    padding-bottom:5px;
+}
+.error-comment{
+    display:none;
+}
+#posts_div{
+margin-bottom:80px;
+}

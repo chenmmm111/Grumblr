@@ -1,0 +1,39 @@
+{% for post in posts %}
+<div class="media bg-light">
+						<a href="{% url 'profile' post.user_profile.user.id %}"><img class="profile" src="{% url 'photo' post.user_profile.id %}" alt="{{ post.user_profile.user.username }}"></a>
+						<div class="media-body">
+							<a href="{% url 'profile' post.user_profile.user.id %}"><h4>{{ post.user_profile.user.username }}</h4></a>
+							<em>{{ post.date|date:"H:i M j, Y" }}</em>
+							<p class="post-body">{{ post.body }}</p>
+							<!--comment part-->
+							<button id="{{ post.id }}" class="comment-label btn btn-link">Comment({{ post.count }})</button>
+							<form method="post" id="comment-form-{{ post.id }}" class="comment-form">
+								{% csrf_token %}
+								{% for field in post.comment_form.visible_fields %}
+									{{ field }}
+								{% if field.errors %}<p>{{ field.errors.as_text }}</p>{% endif %}
+								{% endfor %}
+								<p class="error error-comment" id="comment-form-{{ post.id }}-error"></p>
+								 <button type="submit" class="btn btn-link float-right">Submit</button>
+								<!--comment content-->
+
+								{% if post.comment_list %}
+								{% for comment in post.comment_list %}
+
+								<div class="commentMedia bg-light border border-right-0 border-left-0  border-bottom-0">
+									<a class="align-top" href="{% url 'profile' comment.author_user_profile.user.id %}"><img class="profile align-top" src="{% url 'photo' comment.author_user_profile.id %}" alt="{{ comment.author_user_profile.user.username }}"></a>
+									<div class="commentMedia-body">
+										<a href="{% url 'profile' comment.author_user_profile.user.id %}"><h6>{{ comment.author_user_profile.user.username }}</h6></a>
+										<em class="date">{{ comment.time|date:"H:i M j, Y" }}</em>
+										<p class="comment-body">{{ comment.comment }}</p>
+									</div>
+								</div>
+								{% endfor %}
+								{% endif %}
+
+							</form>
+
+						</div>
+</div>
+
+{% endfor %}

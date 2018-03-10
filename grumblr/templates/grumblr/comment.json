@@ -1,0 +1,8 @@
+{
+  "author_id" : "{{ new_commen.author.id }}",
+  "author" : "{{ new_commen.author.username }}",
+  "body" : "{{ new_commen.comment }}",
+  "time" : "{{ new_comment.time|date:'H:i M j, Y' }}",
+  "post_id": "{{ new_comment.post.id }}",
+  "user_profile_id":"{{ new_comment.post.user_profile.id }}"
+}

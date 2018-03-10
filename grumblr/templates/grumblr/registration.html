@@ -1,0 +1,34 @@
+{% extends "grumblr/base.html" %}
+
+{% block beforeform %}
+<h1>Join Grumblr</h1><br>
+	<form action="{% url 'register' %}" method="post" name="register">
+{% endblock %}
+
+{% block loophead %}
+	{% for field in form.visible_fields %}
+		<tr>
+			<td class="label">{{ field.label_tag }}</td>
+			<td class="field">{{ field }}</td>
+			<td class="errortd">{{ field.errors.as_text }}</td>
+		</tr>
+	{% endfor %}
+{% endblock %}
+
+{% block buttontag %}
+	Sign Up
+{% endblock %}
+
+
+{% block alt %}
+	Already have an account? <button class="btn btn-link" onclick="location.href='{% url 'login' %}'">Login here</button>
+{% endblock %}
+
+{% block userinfo %}{% endblock %}
+
+{% block errors %}{% endblock %}
+
+{% block posts %}{% endblock %}
+
+{% block pagination %}{% endblock %}
+

@@ -1,0 +1,80 @@
+{% extends "grumblr/base.html" %}
+{% block formcontent %}
+	<div class="divinside">
+    		<div class="row">
+    			<div class="col"></div>
+    			<div class="login-form col-10">
+
+					<h1>Edit Your Profile</h1><br>
+					{% if messages %}
+						{% for message in messages %}
+							{% if message.tags %} {% ifequal message.tags 'error'%} <p class="error"> {% else %}<p class="success">{% endifequal %} {{ message.tags }} - {% endif %} {{message}}</p>
+						{% endfor %}
+					{% endif %}
+					<p>
+						{% if profile_form.image.value %}
+						<img src="{% url 'photo' id %}" class="profile" alt="{{profile_form.user.username}}">
+						{% endif %}
+					</p>
+					<form method="POST" enctype='multipart/form-data'>
+						{% csrf_token %}
+
+					{% if user_form%}
+						{% for error in user_form.non_field_errors %}
+							<p class="error">{{ error }}</p>
+						{% endfor %}
+					{% endif %}
+					{% if profile_form%}
+						{% for error in profile_form.non_field_errors %}
+							<p class="error">{{ error }}</p>
+						{% endfor %}
+					{% endif %}
+					<table class="logintable">
+
+						{% for field in user_form %}
+							<tr>
+								<td class="label">{{ field.label_tag }}</td>
+								<td class="field">{{ field }}</td>
+								<td class="errortd">{{ field.errors.as_text }}</td>
+							</tr>
+						{% endfor %}
+						{% for field in profile_form %}
+							<tr>
+								<td class="label">{{ field.label_tag }}</td>
+								<td class="field">{{ field }}</td>
+								<td class="errortd">{{ field.errors.as_text }}</td>
+							</tr>
+						{% endfor %}
+						<tr><td colspan="3">&nbsp;</td></tr>
+						<tr><td colspan="3">&nbsp;</td></tr>
+						<tr>
+							<td colspan="2"><button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button></td>
+						</tr>
+						<tr>
+							<td colspan="2"><button type="button" class="btn btn-primary btn-lg btn-block" onclick="location.href='{% url 'profile' user_id %}'">Go back</button></td>
+						</tr>
+
+					</table>
+
+					</form>
+					<button class="btn btn-link" onclick="location.href='{% url 'reset_password' %}'">Go to reset your password</button>
+					<div>
+					</div>
+    			</div>
+    			<div class="col"></div>
+    		</div>
+
+	</div>
+
+
+
+
+
+{% endblock %}
+
+{% block errors %}{% endblock %}
+
+{% block posts %}{% endblock %}
+
+{% block pagination %}{% endblock %}
+

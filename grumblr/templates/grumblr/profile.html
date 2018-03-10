@@ -1,0 +1,70 @@
+{% extends "grumblr/base.html" %}
+{% load staticfiles %}
+{% block profile %}
+	<div class="media" >
+		<div class="row" style="width:100%;">
+			<div class="col">
+				{% if user_profile.image %}
+					<img class="profile" src="{% url 'photo' user_profile.id %}" alt="{{ user_profile.user.username }}">
+				{% endif %}
+
+			</div>
+			<div class="col-7">
+				<h3>{{search_user.first_name}}&nbsp;{{search_user.last_name}}</h3><br>
+    		<table class="table table-sm profiletable">
+				<tr>
+					{% if search_user %}
+						<td class="labelp">Username</td>
+						<td class="content">{{search_user.username}}</td>
+					{% endif %}
+				</tr>
+				<tr>
+					{% if object_list %}
+						<td class="labelp">Posts</td>
+						<td class="content">{{ object_list|length }}</td>
+					{% else %}
+						<td class="labelp">Posts</td>
+						<td class="content">0</td>
+					{% endif %}
+				</tr>
+			{% for field in user_form %}
+
+				<tr>
+					<td class="labelp">{{ field.label }}</td>
+					<td class="content">{{ field.value }}</td>
+				</tr>
+
+			{% endfor %}
+			{% for field in profile_form %}
+
+				<tr>
+					<td class="labelp">{{ field.label }}</td>
+					<td class="content">{{ field.value }}</td>
+				</tr>
+
+			{% endfor %}
+
+				<tr><td colspan="2">
+				{% ifequal current_user.id user_profile.user.id%}
+					<a href="{% url 'edit_profile' %}">Edit profile</a>
+				{% else %}
+					{% if following %}
+						<a href="{% url 'unfollow' user_profile.user.id %}">Unfollow {{ user_profile.user.username }}</a>
+					{% else %}
+					<a href="{% url 'follow' user_profile.user.id %}">Follow {{ user_profile.user.username }}</a>
+					{% endif %}
+				{% endifequal %}
+				</td></tr>
+			</table>
+			</div>
+
+		</div>
+
+    </div>
+{% endblock %}
+{% block js %}
+	<script src="{% static 'grumblr/js/post.js' %}"></script>
+{% endblock %}
+{% block errors %}{% endblock %}
+{% block textview %}{% endblock %}
+{% block formcontent %}{% endblock %}

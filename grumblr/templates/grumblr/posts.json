@@ -1,0 +1,6 @@
+{
+  "posts":[
+    {% for post in posts %}{% include 'grumblr/post.json' %}{% if not forloop.last %}, {% endif %}{% endfor %}
+  ],
+  "max_id":"{{ new_max_id }}"
+}

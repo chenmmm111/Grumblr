@@ -1,0 +1,30 @@
+{% extends "grumblr/base.html" %}
+{% load staticfiles %}
+{% block textview %}
+	<div class="form-group input">
+				<!--display error message and success message after user click on post button-->
+		{% for error in form.non_field_errors %}
+		<p class="error"> {{ error }} </p>
+		{% endfor %}
+		{% if messages %}
+			{% for message in messages %}
+				{% if message.tags %} {% ifequal message.tags 'error'%} <p class="error"> {% else %}<p class="success">{% endifequal %} {{ message.tags }} - {% endif %} {{message}}</p>
+			{% endfor %}
+		{% endif %}
+		<form method="GET" action="{% url 'post' %}" name="post">
+			<label>What do you want to post right now?</label>
+				{% for field in post_form.visible_fields %}
+					{{ field }}
+				<p>{{ field.errors.as_text }}</p>
+				{% endfor %}
+			<button type="submit" class="btn btn-primary btn-sm float-right postbtn">Post</button>
+		</form>
+
+	</div>
+{% endblock %}
+
+{% block js %}
+	<script src="{% static 'grumblr/js/post.js' %}"></script>
+{% endblock %}
+
+{% block formcontent %}{% endblock %}

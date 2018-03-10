@@ -1,0 +1,11 @@
+
+								<div class="commentMedia bg-light border border-right-0 border-left-0  border-bottom-0">
+									<a class="align-top" href="{% url 'profile' comment.author_user_profile.user.id %}"><img class="profile align-top" src="{% url 'photo' comment.author_user_profile.id %}" alt="{{ comment.author_user_profile.user.username }}"></a>
+									<div class="commentMedia-body">
+										<a href="{% url 'profile' comment.author_user_profile.user.id %}"><h6>{{ comment.author_user_profile.user.username }}</h6></a>
+										<em class="date">{{ comment.time|date:"H:i M j, Y" }}</em>
+										<p class="comment-body">{{ comment.comment }}</p>
+									</div>
+								</div>
+
+

@@ -1,0 +1,189 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<!-- Meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<title>Grumblr</title>
+	{% load staticfiles %}
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="{% static 'grumblr/css/bootstrap.min.css' %}" >
+	<link rel="stylesheet" href="{% static 'grumblr/css/grumblr.css' %}">
+	 <script src="{% static 'grumblr/js/jquery-3.2.1.min.js' %}"></script>
+
+
+</head>
+<body>
+
+	<!-- Navigator bar -->
+  	<nav class="navbar fixed-top navbar-expand-md navbar-light bg-light">
+  	<div class="container">
+    	<a class="navbar-brand" href="/grumblr/global-stream">
+          	<img alt="logo" src="{% static 'grumblr/images/logo-blue.png' %}" width="75" height="auto" class="d-inline-block align-top">
+        </a>
+
+		{% block userinfo %}
+			<ul class="nav navbar-nav navbar-right my-2 my-lg-0">
+				<li class="nav-item active">
+					<a class="nav-link" href="{% url 'following_page'%}">Following</a>
+				</li>
+		 	</ul>
+			<div class="collapse navbar-collapse">
+			  <ul class="navbar-nav mr-auto mt-2 mt-lg-0"></ul>
+			  <ul class="nav navbar-nav navbar-right my-2 my-lg-0">
+				<li class="nav-item active">
+					<a class="nav-link" href="{% url 'profile' current_user.id %}">{{ current_user.username }}</a>
+				</li>
+				<li class="nav-item active"><a class="nav-link" href="{% url 'logout' %}">logout</a></li>
+			  </ul>
+			</div>
+		{% endblock %}
+	</div>
+  	</nav>
+  	
+
+  
+  	<div class="container">
+
+		<!-- input textview div -->
+
+		{% block textview %}
+		{% endblock %}
+
+		<!-- error alert -->
+		{% block errors %}
+			{% if errors %}
+				{% for error in errors %}
+					<p class="error"> {{error}}</p>
+				{% endfor %}
+			{% endif %}
+		{% endblock %}
+
+		<!-- profile part -->
+		{% block profile %}
+		{% endblock %}
+
+		<!-- login | registration -->
+		{% block formcontent %}
+			<div class="divinside">
+    		<div class="row">
+    			<div class="col"></div>
+    			<div class="login-form col-7">
+					{% block beforeform %}
+					{% endblock %}
+
+					{% if form%}
+						{% for error in form.non_field_errors %}
+							<p class="error">{{ error }}</p>
+						{% endfor %}
+
+					{% endif %}
+					{% csrf_token %}
+						<table class="logintable">
+							{% if form %}
+							{% block loophead %}
+							{% endblock %}
+							{% endif %}
+							<tr><td colspan="3">&nbsp;</td></tr>
+							<tr><td colspan="3">&nbsp;</td></tr>
+							<tr>
+								<td colspan="2"><button type="submit" class="btn btn-primary btn-lg btn-block">{% block buttontag %}{% endblock %}</button></td>
+							</tr>
+
+						</table>
+					</form>
+					<div>
+						{% block alt %}
+						{% endblock %}
+					</div>
+    			</div>
+    			<div class="col"></div>
+    		</div>
+
+    	</div>
+
+		{% endblock %}
+
+		<!-- global streams -->
+		<div id="posts_div">
+		{% block posts %}
+			{% if object_list %}
+				{% for post in object_list %}
+
+					<div class="media bg-light">
+						<a href="{% url 'profile' post.user_profile.user.id %}"><img class="profile" src="{% url 'photo' post.user_profile.id %}" alt="{{ post.user_profile.user.username }}"></a>
+						<div class="media-body">
+							<a href="{% url 'profile' post.user_profile.user.id %}"><h4>{{ post.user_profile.user.username }}</h4></a>
+							<em>{{ post.date|date:"H:i M j, Y" }}</em>
+							<p class="post-body">{{ post.body }}</p>
+							<!--comment part-->
+							<button id="{{ post.id }}" class="comment-label btn btn-link">Comment({{ post.count }})</button>
+							<form method="post" id="comment-form-{{ post.id }}" class="comment-form">
+								{% csrf_token %}
+								{% for field in comment_form.visible_fields %}
+									{{ field }}
+								{% if field.errors %}<p>{{ field.errors.as_text }}</p>{% endif %}
+								{% endfor %}
+								<p class="error error-comment" id="comment-form-{{ post.id }}-error"></p>
+								 <button type="submit" class="btn btn-link float-right">Submit</button>
+								<!--comment content-->
+								<div id="comment-form-{{ post.id }}-div">
+								{% if post.comment_list %}
+								{% for comment in post.comment_list %}
+
+								<div class="commentMedia bg-light border border-right-0 border-left-0  border-bottom-0">
+									<a class="align-top" href="{% url 'profile' comment.author_user_profile.user.id %}"><img class="profile align-top" src="{% url 'photo' comment.author_user_profile.id %}" alt="{{ comment.author_user_profile.user.username }}"></a>
+									<div class="commentMedia-body">
+										<a href="{% url 'profile' comment.author_user_profile.user.id %}"><h6>{{ comment.author_user_profile.author.username }}</h6></a>
+										<em class="date">{{ comment.time|date:"H:i M j, Y" }}</em>
+										<p class="comment-body">{{ comment.comment }}</p>
+									</div>
+								</div>
+								{% endfor %}
+								{% endif %}
+									</div>
+
+							</form>
+
+						</div>
+					</div>
+				{% endfor %}
+
+			<input type="hidden" name="max_id" id="max_id" value="{{ max_id }}">
+
+			{% endif %}
+		{% endblock %}
+		</div>
+		<!-- pagination -->
+
+		<!--{% block pagination %}-->
+		<!--<div class="media">-->
+  			<!--<ul class="pagination">-->
+                <!--{% if object_list %}-->
+					<!--{% if object_list.has_previous %}-->
+						<!--<li><a href="?page={{ object_list.previous_page_number }}">&laquo;</a></li>-->
+					<!--{% endif %}-->
+					<!--{% for i in object_list.paginator.page_range %}-->
+						<!--{% if object_list.number == i %}-->
+						<!--<li class="active">{{ i }} <span class="sr-only">(current)</span></span></li>-->
+						<!--{% else %}-->
+						<!--<li><a href="?page={{ i }}">{{ i }}</a></li>-->
+						<!--{% endif %}-->
+					<!--{% endfor %}-->
+					<!--{% if object_list.has_next %}-->
+						<!--<li><a href="?page={{ object_list.next_page_number }}">&raquo;</a></li>-->
+					<!--{% endif %}-->
+                <!--{% endif %}-->
+  			<!--</ul>-->
+		<!--</div>-->
+
+		{% endblock %}
+    		
+    	
+  	</div>
+	
+{% block js %}
+{% endblock %}
+</body>
+</html>

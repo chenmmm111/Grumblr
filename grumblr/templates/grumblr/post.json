@@ -1,0 +1,11 @@
+{
+  "id" : "{{ post.id }}",
+  "username" : "{{post.user_profile}}",
+  "user_id" : "{{post.user_profile.user.id}}",
+  "body" : "{{post.body}}",
+  "date" : "{{post.date|date:'H:i M j, Y'}}",
+  "profile_id": "{{post.user_profile.id}}",
+  "count": "post.count",
+  "comment_list": [{% if post.comment_list %}{% for new_comment in post.comment_list %}{% include 'grumblr/comment.json' %}{% endfor %}{% endif %}],
+  "comment_form_field": [{% for field in post.comment_form.visible_fields %}"{{ field|safe }}"{% if not forloop.last %},{% endif %}{% endfor %}]
+}

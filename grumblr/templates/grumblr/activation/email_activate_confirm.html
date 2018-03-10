@@ -1,0 +1,25 @@
+{% extends "grumblr/base.html" %}
+
+
+	{% block formcontent %}
+{% if validlink %}
+		<p> You have successfully activated your email address. Welcome to Grumblr!</p>
+		<a href="{% url 'globalstream' %}">Go to the home</a>
+
+{% else %}
+
+		<p>
+			The password reset link was invalid, please request a new password reset.
+		</p>
+
+{% endif %}
+{% endblock %}
+
+
+{% block userinfo %}{% endblock %}
+
+{% block errors %}{% endblock %}
+
+{% block posts %}{% endblock %}
+
+{% block pagination %}{% endblock %}

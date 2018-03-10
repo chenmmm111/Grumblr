@@ -1,0 +1,38 @@
+{% extends "grumblr/base.html" %}
+
+{% block beforeform %}
+<h1>Login</h1><br>
+
+	<form action="{% url 'login' %}" method="post" name="login">
+
+{% endblock %}
+
+{% block loophead %}
+	{% for field in form %}
+		<tr>
+			<td class="label">{{ field.label_tag }}</td>
+			<td class="field">{{ field }}</td>
+			<td class="errortd">{{ field.errors.as_text }}</td>
+		</tr>
+	{% endfor %}
+		<tr><td class="field" colspan="2" align="right"><button class="btn btn-link" onclick="location.href='{% url 'reset_password' %}'">Forget your password?</button></td></tr>
+
+{% endblock %}
+
+{% block buttontag %}
+	Login
+{% endblock %}
+
+
+{% block alt %}
+	Don't have an account? <button class="btn btn-link" onclick="location.href='{% url 'register' %}'">Sign up here</button>
+
+{% endblock %}
+
+{% block userinfo %}{% endblock %}
+
+{% block errors %}{% endblock %}
+
+{% block posts %}{% endblock %}
+
+{% block pagination %}{% endblock %}
