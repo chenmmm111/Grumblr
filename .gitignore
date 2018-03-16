@@ -1,0 +1,19 @@
+# Class-specific section #
+.DS_Store
+
+# Java section #
+*.class
+
+# Python section #
+*.pyc
+
+
+# Mr Developer
+.mr.developer.cfg
+.project
+.pydevproject
+
+.idea/
+/data/
+
+*.orig
